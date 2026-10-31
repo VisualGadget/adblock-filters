@@ -6,5 +6,5 @@ After=network-online.target
 [Service]
 Type=oneshot
 Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin:/snap/bin
-ExecStart=%h/git/adblock-filters/tools/auto_update.sh
+ExecStart=%h/git/Python/adblock-filters/tools/auto_update.sh
 TimeoutStartSec=1h
