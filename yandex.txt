@@ -24,6 +24,8 @@ yandex.*,ya.ru##div:matches-attr(id=/(?:^|_)R-[AI]-\d+-\d+$/)
 translate.yandex.*##.side-block
 ! Translate: shrink the fixed-width menu column to its icons, so the page centers menu and content without the ad column
 translate.yandex.*##.page_vertical-menu > :is(#verticalMenu, .verticalMenu):style(flex: 0 0 auto !important; width: auto !important; min-width: 0 !important)
+! Translate: "Translator for 100+ languages" promo and popular translation directions below the translator
+translate.yandex.*###popularTranslations
 
 ! Yandex Mail: ad above the message list (the header child with a random class) and the right ad column
 mail.yandex.*##[data-testid="content-header_container"] > div:not([data-testid]):not([class*="ContentHeader-m__"])

@@ -4,7 +4,7 @@ Custom filter lists for uBlock Origin (most rules also work in AdGuard).
 
 | List | Covers | Subscribe URL |
 | --- | --- | --- |
-| [yandex.txt](yandex.txt) | Yandex ad blocks: Translate sidebar ads, Yandex RTB units on any site | `https://raw.githubusercontent.com/VisualGadget/adblock-filters/main/yandex.txt` |
+| [yandex.txt](yandex.txt) | Yandex ad blocks: Translate sidebar ads, Yandex Mail ads and promo buttons, Yandex RTB units on any site | `https://raw.githubusercontent.com/VisualGadget/adblock-filters/main/yandex.txt` |
 
 ## Usage
 
