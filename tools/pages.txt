@@ -1,4 +1,4 @@
 # One URL per line; lines starting with # are ignored.
 https://translate.yandex.com/
-https://mail.yandex.com/
+https://mail.yandex.ru/
 https://ya.ru/
