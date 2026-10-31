@@ -11,19 +11,26 @@ checker="$repo/tools/check_ads.py"
 cd "$repo"
 git pull --quiet --ff-only
 
-if "$checker" --output "$report"; then
-    echo "No ads found."
-    exit 0
-fi
+status=0
+"$checker" --output "$report" || status=$?
 
 if [[ ! -f "$report/summary.json" ]]; then
     echo "Checker failed without a report." >&2
     exit 2
 fi
 
-if grep -q '"final_url": "https://passport\.' "$report/summary.json"; then
-    echo "A page redirects to the login form; log in again with: $checker --login" >&2
-    exit 2
+if [[ $status -eq 3 ]]; then
+    python3 -c 'import json, sys
+for p in json.load(open(sys.argv[1]))["pages"]:
+    if not p["logged_in"]:
+        print("Not logged in:", p["url"], "-", "; ".join(p["logged_out_reasons"]))' "$report/summary.json" >&2
+    echo "Log in again with: $checker --login" >&2
+    exit 3
+fi
+
+if [[ $status -eq 0 ]]; then
+    echo "No ads found."
+    exit 0
 fi
 
 prompt="$(sed "s|{report}|$report|g" "$repo/tools/fix_prompt.md")"

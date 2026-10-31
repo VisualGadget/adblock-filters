@@ -3,7 +3,8 @@
 
 Firefox runs with a dedicated persistent profile, so a Yandex login made once with ``--login`` is reused by later
 headless runs. Each run copies the repository lists into uBlock Origin's "My filters", loads every page from the
-pages file, looks for visible ads and writes a report with screenshots. The exit code is 1 when an ad is found.
+pages file, looks for visible ads and writes a report with screenshots. The exit code is 1 when an ad is found and
+3 when a page is not logged in.
 """
 
 import argparse
@@ -115,6 +116,25 @@ const resources = performance.getEntriesByType('resource').map(r => r.name)
 return {items, resources: [...new Set(resources.map(n => n.slice(0, 160)))]};
 """
 
+# A page is logged out when it shows a visible login link or button, or lacks the Yandex login cookie.
+LOGIN_JS = r"""
+const visible = e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+const enter = [...document.querySelectorAll('a, button, [role="button"]')].filter(e => visible(e) && (
+    /^(войти|log ?in|sign ?in)$/i.test((e.innerText || e.getAttribute('aria-label') || '').trim()) ||
+    (/passport\.yandex\.[a-z.]+\/(auth|pwl)/.test(e.href || '') && !/mode=add-user/.test(e.href))));
+const reasons = [];
+if (/^passport\./.test(location.hostname)) {
+    reasons.push('login page');
+}
+if (enter.length) {
+    reasons.push('login link: ' + (enter[0].innerText || enter[0].href || '').trim().slice(0, 60));
+}
+if (/(^|\.)(yandex\.[a-z.]+|ya\.ru)$/.test(location.hostname) && !/(^|; )yandex_login=[^;]+/.test(document.cookie)) {
+    reasons.push('no yandex_login cookie');
+}
+return reasons;
+"""
+
 
 def start_firefox(headless: bool) -> webdriver.Firefox:
     """Start Firefox with the dedicated persistent profile.
@@ -196,6 +216,7 @@ def check_page(driver: webdriver.Firefox, url: str, out: Path, wait: float) -> d
     time.sleep(wait)
     report['final_url'] = driver.current_url
     report['title'] = driver.title
+    report['logged_out'] = driver.execute_script(LOGIN_JS)
     report.update(driver.execute_script(FIND_ADS_JS))
     driver.save_screenshot(str(out / 'page.png'))
     for index, item in enumerate(report['items']):
@@ -226,7 +247,12 @@ def main() -> int:
 
     if args.login:
         driver = start_firefox(headless=False)
-        driver.get(pages[0] if pages else 'https://passport.yandex.ru/')
+        for n, url in enumerate(pages or ['https://passport.yandex.ru/']):
+            if n:
+                driver.switch_to.new_window('tab')
+
+            driver.get(url)
+
         print('Log in in the Firefox window, then close it.')
         try:
             while driver.window_handles:
@@ -250,13 +276,23 @@ def main() -> int:
     summary: dict[str, Any] = {
         'filter_lines': lines,
         'pages': [
-            {'url': r['url'], 'final_url': r['final_url'], 'ads': len(r['items']), 'error': r.get('error')}
+            {
+                'url': r['url'],
+                'final_url': r['final_url'],
+                'logged_in': not r['logged_out'],
+                'logged_out_reasons': r['logged_out'],
+                'ads': len(r['items']),
+                'error': r.get('error'),
+            }
             for r in reports
         ],
     }
     (out / 'summary.json').write_text(json.dumps(summary, indent=1, ensure_ascii=False) + '\n')
     print(json.dumps(summary, indent=1, ensure_ascii=False))
     print(f'Report: {out}')
+
+    if not all(p['logged_in'] for p in summary['pages']):
+        return 3
 
     return 1 if any(p['ads'] for p in summary['pages']) else 0
 
