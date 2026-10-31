@@ -13,8 +13,12 @@
 ||yastatic.net/safeframe-bundles/
 ||avatars.mds.yandex.net/get-direct*$image,domain=~direct.yandex.ru|~direct.yandex.com
 
-! Cosmetic, independent of where the ad is loaded from
+! Cosmetic, independent of where the ad is loaded from.
+! Anti-adblock mode serves ads via first-party proxies (/_crpd/, yastatic.net/naydex/, shared with site
+! scripts) and randomizes element IDs, but keeps the ad unit suffix such as "_R-I-2147964-21".
 ##[id^="yandex_rtb_"]
 ##[id^="yandex_ad_R-"]
 yandex.*,ya.ru###sidebar-direct
 yandex.*,ya.ru##.side-block:has(#sidebar-direct)
+yandex.*,ya.ru##div:matches-attr(id=/(?:^|_)R-[AI]-\d+-\d+$/)
+translate.yandex.*##.side-block
