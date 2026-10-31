@@ -28,4 +28,6 @@ mail.yandex.*##[data-testid="content-header_container"] > div:not([data-testid])
 mail.yandex.*##[class*="PageLayout-m__body"] > div:has([class*="DisableAdsButton"])
 
 ! ya.ru: everything below the search bar (text ad banner, card feed)
-ya.ru##.body__wrapper > .search3__wrapper ~ *
+! Anti-adblock mode randomizes the wrapper classes (body__wrapper -> body__xRs3MrPQEaA); the search form keeps its role.
+ya.ru##.search3__wrapper ~ *
+ya.ru##main > :has(form[role="search"]) ~ *
