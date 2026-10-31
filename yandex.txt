@@ -1,5 +1,5 @@
 ! Title: Yandex ads
-! Description: Hides Yandex ads (Translate sidebar, Mail banners, Yandex RTB units) for uBlock Origin
+! Description: Hides Yandex ads (Translate sidebar, Mail banners, ya.ru feed, Yandex RTB units) for uBlock Origin
 ! Homepage: https://github.com/VisualGadget/adblock-filters
 ! Expires: 4 days
 
@@ -26,3 +26,6 @@ translate.yandex.*##.side-block
 ! Yandex Mail: ad above the message list (the header child with a random class) and the right ad column
 mail.yandex.*##[data-testid="content-header_container"] > div:not([data-testid]):not([class*="ContentHeader-m__"])
 mail.yandex.*##[class*="PageLayout-m__body"] > div:has([class*="DisableAdsButton"])
+
+! ya.ru: everything below the search bar (text ad banner, card feed)
+ya.ru##.body__wrapper > .search3__wrapper ~ *
