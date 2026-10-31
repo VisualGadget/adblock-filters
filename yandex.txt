@@ -1,0 +1,20 @@
+! Title: Yandex ads
+! Description: Hides Yandex ad blocks (Translate sidebar "SOCIAL AD" and Yandex RTB units) for uBlock Origin
+! Homepage: https://github.com/VisualGadget/adblock-filters
+! Expires: 4 days
+
+! Network
+||yandex.*/ads/system/$script
+||yandex.*/ads/meta/
+||yandex.*/an/$image,ping,xhr
+||an.yandex.ru^$third-party
+||yabs.yandex.*^
+||yastatic.net/partner-code-bundles/
+||yastatic.net/safeframe-bundles/
+||avatars.mds.yandex.net/get-direct*$image,domain=~direct.yandex.ru|~direct.yandex.com
+
+! Cosmetic, independent of where the ad is loaded from
+##[id^="yandex_rtb_"]
+##[id^="yandex_ad_R-"]
+yandex.*,ya.ru###sidebar-direct
+yandex.*,ya.ru##.side-block:has(#sidebar-direct)
