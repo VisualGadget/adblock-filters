@@ -62,8 +62,19 @@ for (const e of document.querySelectorAll('[id]')) {
         add(e, 'ad unit id');
     }
 }
+// Yandex ad renderer: a host with a random "l<8 hex>" or "csr-uniq<n>" class that draws the ad in a closed shadow root.
+for (const e of document.querySelectorAll('div[class]')) {
+    if (/^(l[0-9a-f]{8}|csr-uniq\d+)$/.test(e.className) && visible(e)) {
+        add(e.parentElement || e, 'ad renderer');
+    }
+}
+for (const e of document.querySelectorAll('[class*="DisableAdsButton"]')) {
+    if (visible(e)) {
+        add(e, 'disable ads button');
+    }
+}
 for (const e of document.querySelectorAll('iframe')) {
-    if (/safeframe|\/ads\/|an\.yandex/.test(e.src || '') && visible(e)) {
+    if (/safeframe|\/ads\/|an\.yandex|\/naydex\//.test(e.src || '') && visible(e)) {
         add(e, 'ad iframe');
     }
 }
