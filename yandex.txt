@@ -28,6 +28,9 @@ translate.yandex.*##.page_vertical-menu > :is(#verticalMenu, .verticalMenu):styl
 ! Yandex Mail: ad above the message list (the header child with a random class) and the right ad column
 mail.yandex.*##[data-testid="content-header_container"] > div:not([data-testid]):not([class*="ContentHeader-m__"])
 mail.yandex.*##[class*="PageLayout-m__body"] > div:has([class*="DisableAdsButton"])
+! Yandex Mail: "+1 TB" upgrade button in the top bar and the floating "connect Alice Pro" button
+mail.yandex.*##[data-testid="orb-global-bar-monetization-item"]
+mail.yandex.*###js-neuroexpert-button
 
 ! ya.ru: everything below the search bar (text ad banner, card feed)
 ! Anti-adblock mode randomizes the wrapper classes (body__wrapper -> body__xRs3MrPQEaA); the search form keeps its role.
