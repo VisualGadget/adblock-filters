@@ -50,3 +50,5 @@ ya.ru##main > :has(form[role="search"]) ~ *
 ! Survey panel sliding in from the right ("Оцените раздел Заказы"): a notification banner widget at the end of the
 ! page. Other notification banners are kept.
 ozon.ru##[data-widget="notificationBanner"]:has-text(Оцените раздел)
+! Review request bubble ("Поблагодарите продавца" with star rating of a bought item) on the home page
+ozon.ru##[data-widget="bubbleRateBoughtItem"]
