@@ -1,0 +1,52 @@
+! Title: VisualGadget ad filters
+! Description: Hides ads, promo nags and surveys on Yandex and Ozon sites for uBlock Origin; one section per company
+! Homepage: https://github.com/VisualGadget/adblock-filters
+! Expires: 4 days
+
+! ==============================================================================
+! Yandex
+! ==============================================================================
+
+! Network
+||yandex.*/ads/system/$script
+||yandex.*/ads/meta/
+||yandex.*/an/$image,ping,xhr
+||an.yandex.ru^$third-party
+||yabs.yandex.*^
+||yastatic.net/partner-code-bundles/
+||yastatic.net/safeframe-bundles/
+||avatars.mds.yandex.net/get-direct*$image,domain=~direct.yandex.ru|~direct.yandex.com
+
+! Cosmetic, independent of where the ad is loaded from.
+! Anti-adblock mode serves ads via first-party proxies (/_crpd/, yastatic.net/naydex/, shared with site
+! scripts) and randomizes element IDs, but keeps the ad unit suffix such as "_R-I-2147964-21".
+##[id^="yandex_rtb_"]
+##[id^="yandex_ad_R-"]
+yandex.*,ya.ru###sidebar-direct
+yandex.*,ya.ru##.side-block:has(#sidebar-direct)
+yandex.*,ya.ru##div:matches-attr(id=/(?:^|_)R-[AI]-\d+-\d+$/)
+translate.yandex.*##.side-block
+! Translate: shrink the fixed-width menu column to its icons, so the page centers menu and content without the ad column
+translate.yandex.*##.page_vertical-menu > :is(#verticalMenu, .verticalMenu):style(flex: 0 0 auto !important; width: auto !important; min-width: 0 !important)
+! Translate: "Translator for 100+ languages" promo and popular translation directions below the translator
+translate.yandex.*###popularTranslations
+
+! Yandex Mail: ad above the message list (the header child with a random class) and the right ad column
+mail.yandex.*##[data-testid="content-header_container"] > div:not([data-testid]):not([class*="ContentHeader-m__"])
+mail.yandex.*##[class*="PageLayout-m__body"] > div:has([class*="DisableAdsButton"])
+! Yandex Mail: "+1 TB" upgrade button in the top bar and the floating "connect Alice Pro" button
+mail.yandex.*##[data-testid="orb-global-bar-monetization-item"]
+mail.yandex.*###js-neuroexpert-button
+
+! ya.ru: everything below the search bar (text ad banner, card feed)
+! Anti-adblock mode randomizes the wrapper classes (body__wrapper -> body__xRs3MrPQEaA); the search form keeps its role.
+ya.ru##.search3__wrapper ~ *
+ya.ru##main > :has(form[role="search"]) ~ *
+
+! ==============================================================================
+! Ozon
+! ==============================================================================
+
+! Survey panel sliding in from the right ("Оцените раздел Заказы"): a notification banner widget at the end of the
+! page. Other notification banners are kept.
+ozon.ru##[data-widget="notificationBanner"]:has-text(Оцените раздел)
