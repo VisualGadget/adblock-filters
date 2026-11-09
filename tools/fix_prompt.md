@@ -4,7 +4,7 @@ The check report is in `{report}`: `summary.json` lists the pages, and every pag
 
 Update the filter lists in this repository so the ads are hidden or blocked:
 
-- Edit only `filters.txt` in the repository root (`yandex.txt` is a stub that includes it). Add rules to the
+- Edit only `filters.txt` in the repository root. Add rules to the
   section of the site's company (`! ===` banner with the company name), or add a new section in the same format at
   the end and mention the company in the `filters.txt` row of `README.md`.
 - Prefer cosmetic rules on stable signals: application class names, ad unit IDs such as `R-I-<n>-<n>`,
