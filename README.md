@@ -6,8 +6,6 @@ Custom filter lists for uBlock Origin (most rules also work in AdGuard).
 | --- | --- | --- |
 | [filters.txt](filters.txt) | All lists, one section per company. Yandex: Translate sidebar ads, Yandex Mail ads and promo buttons, ya.ru feed, Yandex RTB units on any site. Ozon: survey panels | `https://raw.githubusercontent.com/VisualGadget/adblock-filters/main/filters.txt` |
 
-`yandex.txt` is kept for existing subscriptions and includes `filters.txt`.
-
 ## Usage
 
 uBlock Origin → Dashboard → **Filter lists** → **Custom** → **Import**, paste the subscribe URL, then **Apply changes**.

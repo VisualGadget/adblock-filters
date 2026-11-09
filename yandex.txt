@@ -1,6 +1,0 @@
-! Title: VisualGadget ad filters
-! Description: Former Yandex-only list, kept for existing subscriptions; it includes filters.txt with every section
-! Homepage: https://github.com/VisualGadget/adblock-filters
-! Expires: 4 days
-
-!#include filters.txt
