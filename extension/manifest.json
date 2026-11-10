@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "VisualGadget site fixes",
+  "version": "1.0.0",
+  "description": "Opens Fastpic image links as the bare image and stops the Fastpic popunder that fills tab history with ad pages.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "site-fixes@visualgadget.github.io",
+      "strict_min_version": "142.0",
+      "update_url": "https://raw.githubusercontent.com/VisualGadget/adblock-filters/main/extension/updates.json",
+      "data_collection_permissions": {"required": ["none"]}
+    }
+  },
+  "permissions": ["declarativeNetRequest"],
+  "host_permissions": ["*://*.fastpic.org/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {"id": "fastpic", "enabled": true, "path": "rules/fastpic.json"}
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://fastpic.org/*", "*://*.fastpic.org/*"],
+      "js": ["content/fastpic_popunder.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}

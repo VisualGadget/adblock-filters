@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {"header": "accept", "operation": "set", "value": "image/avif,image/webp,image/png,image/*;q=0.8,*/*;q=0.5"}
+      ]
+    },
+    "condition": {
+      "regexFilter": "^https?://i[0-9]+\\.fastpic\\.org/big/",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {"type": "block"},
+    "condition": {
+      "urlFilter": "||static.fastpic.org/js/fppop.js",
+      "resourceTypes": ["script"]
+    }
+  }
+]

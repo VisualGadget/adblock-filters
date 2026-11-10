@@ -10,6 +10,30 @@ Custom filter lists for uBlock Origin (most rules also work in AdGuard).
 
 uBlock Origin → Dashboard → **Filter lists** → **Custom** → **Import**, paste the subscribe URL, then **Apply changes**.
 
+## Firefox extension
+
+`extension/` holds fixes that filter lists cannot do, as a Firefox extension:
+
+- Fastpic: an image link such as `i123.fastpic.org/big/…/hash.jpg` opens as the bare image instead of the
+  `fastpic.org/view/` ad page. The image server redirects page loads by the `Accept` request header, so the extension
+  asks for an image there.
+- Fastpic: the popunder on `fastpic.org/view/` pages is blocked. It sends the current tab to an ad on the first click,
+  which leaves ad pages in the tab history.
+
+Install the signed `.xpi` from the latest `extension-v*` release; installed copies update themselves from
+`extension/updates.json`. To try a change without signing, open `about:debugging#/runtime/this-firefox` →
+**Load Temporary Add-on** and pick `extension/manifest.json`.
+
+To release a change, bump `version` in `extension/manifest.json` and run `tools/release_extension.sh` with AMO API
+credentials in `WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` or in `~/tokens.yaml`, then commit and push
+`extension/updates.json`:
+
+```yaml
+amo:
+  api_key: user:12345678:123  # JWT issuer
+  api_secret: ...             # JWT secret
+```
+
 ## Automatic check
 
 `tools/check_ads.py` opens the pages from `tools/pages.txt` in headless Firefox with uBlock Origin, the stock lists
