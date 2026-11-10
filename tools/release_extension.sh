@@ -33,8 +33,8 @@ fi
 
 out=$(mktemp -d)
 trap 'rm -rf "$out"' EXIT
-npx --yes web-ext lint --self-hosted --source-dir "$ext" --ignore-files updates.json
-npx --yes web-ext sign --channel unlisted --source-dir "$ext" --ignore-files updates.json --artifacts-dir "$out"
+npx --yes web-ext lint --self-hosted --source-dir "$ext" --ignore-files updates.json .amo-upload-uuid
+npx --yes web-ext sign --channel unlisted --source-dir "$ext" --ignore-files updates.json .amo-upload-uuid --artifacts-dir "$out"
 signed=$(find "$out" -name '*.xpi' -print -quit)
 mv "$signed" "$out/$xpi_name"
 

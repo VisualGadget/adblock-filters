@@ -5,7 +5,8 @@
     "action": {
       "type": "modifyHeaders",
       "requestHeaders": [
-        {"header": "accept", "operation": "set", "value": "image/avif,image/webp,image/png,image/*;q=0.8,*/*;q=0.5"}
+        {"header": "accept", "operation": "set", "value": "image/avif,image/webp,image/png,image/*;q=0.8,*/*;q=0.5"},
+        {"header": "sec-fetch-dest", "operation": "set", "value": "image"}
       ]
     },
     "condition": {

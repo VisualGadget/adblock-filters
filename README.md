@@ -15,8 +15,11 @@ uBlock Origin → Dashboard → **Filter lists** → **Custom** → **Import**, 
 `extension/` holds fixes that filter lists cannot do, as a Firefox extension:
 
 - Fastpic: an image link such as `i123.fastpic.org/big/…/hash.jpg` opens as the bare image instead of the
-  `fastpic.org/view/` ad page. The image server redirects page loads by the `Accept` request header, so the extension
-  asks for an image there.
+  `fastpic.org/view/` ad page. The image server redirects page loads by the `Sec-Fetch-Dest` and `Accept` request
+  headers, so the extension asks for an image there.
+- Fastpic: a view page (`fastpic.org/view/…html`) is replaced with its full size image, taken from the page behind
+  its "go to image" button. This also covers protected images (file names starting with `_`) that the image server
+  always redirects to the view page.
 - Fastpic: the popunder on `fastpic.org/view/` pages is blocked. It sends the current tab to an ad on the first click,
   which leaves ad pages in the tab history.
 
