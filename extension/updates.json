@@ -1,7 +1,12 @@
 {
   "addons": {
     "site-fixes@visualgadget.github.io": {
-      "updates": []
+      "updates": [
+        {
+          "version": "1.0.0",
+          "update_link": "https://github.com/VisualGadget/adblock-filters/releases/download/extension-v1.0.0/site-fixes-1.0.0.xpi"
+        }
+      ]
     }
   }
 }
