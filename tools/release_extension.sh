@@ -2,13 +2,13 @@
 # Sign the Firefox extension on addons.mozilla.org as unlisted (self-distributed), attach the signed .xpi to a GitHub
 # release and add it to extension/updates.json, so installed copies update themselves.
 # Needs AMO API credentials (https://addons.mozilla.org/developers/addon/api/key/) in WEB_EXT_API_KEY and
-# WEB_EXT_API_SECRET, or in ~/tokens.yaml as amo.api_key (JWT issuer) and amo.api_secret (JWT secret), and the gh CLI
+# WEB_EXT_API_SECRET, or in ~/.config/secrets/tokens.yaml as amo.api_key (JWT issuer) and amo.api_secret (JWT secret), and the gh CLI
 # logged in. Bump "version" in extension/manifest.json first.
 set -euo pipefail
 
 read_token() {
   python3 -c 'import sys, yaml; print(yaml.safe_load(open(sys.argv[1]))["amo"][sys.argv[2]])' \
-    "$HOME/tokens.yaml" "$1"
+    "$HOME/.config/secrets/tokens.yaml" "$1"
 }
 
 if [[ -z "${WEB_EXT_API_KEY:-}" || -z "${WEB_EXT_API_SECRET:-}" ]]; then

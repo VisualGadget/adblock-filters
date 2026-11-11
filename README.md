@@ -28,7 +28,7 @@ Install the signed `.xpi` from the latest `extension-v*` release; installed copi
 **Load Temporary Add-on** and pick `extension/manifest.json`.
 
 To release a change, bump `version` in `extension/manifest.json` and run `tools/release_extension.sh` with AMO API
-credentials in `WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` or in `~/tokens.yaml`, then commit and push
+credentials in `WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` or in `~/.config/secrets/tokens.yaml`, then commit and push
 `extension/updates.json`:
 
 ```yaml
